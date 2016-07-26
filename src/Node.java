@@ -4,6 +4,7 @@ import java.util.ArrayList;
  * Created by babosamo on 2016. 7. 25..
  */
 public class Node {
+
     private Node leftNode;
     private Node rightNode;
     private int value;

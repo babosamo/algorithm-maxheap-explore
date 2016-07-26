@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -8,6 +10,42 @@ public class Main {
 
         root1.printNode();
         root2.printNode();
+
+        getTopNode(root1, 4);
+        getTopNode(root2, 10);
+
+    }
+
+    private static void getTopNode(Node root, int k){
+
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        ArrayList<Node> targetList = new ArrayList<Node>();
+        targetList.add(root);
+
+        for(int i = 0 ; i < k ; i ++){
+            int maxValue = 0;
+            Node popNode = null;
+            for(Node node : targetList){
+                if(maxValue < node.getValue()){
+                    popNode = node;
+                    maxValue = node.getValue();
+                }
+            }
+            result.add(maxValue);
+            targetList.remove(popNode);
+            if(popNode.getRightNode() != null){
+                targetList.add(popNode.getRightNode());
+            }
+
+            if(popNode.getLeftNode() != null){
+                targetList.add(popNode.getLeftNode());
+            }
+        }
+
+        for(int value : result){
+            System.out.print(value + ", ");
+        }
+        System.out.print("\n");
     }
 
     private static Node initData1(){
@@ -34,7 +72,7 @@ public class Main {
         Node root = new Node(100);
 
         root.setLeftNode(new Node(50));
-        root.setRightNode(new Node(30));
+        root.setRightNode(new Node(80));
 
         Node depth1Left = root.getLeftNode();
         Node depth1Right = root.getRightNode();
@@ -66,16 +104,4 @@ public class Main {
         return root;
     }
 
-    private static void printNode(Node root, int depth){
-
-        System.out.println("depth: " + depth + ", value " +  root.getValue());
-
-        if(root.getLeftNode() != null ){
-            printNode(root.getLeftNode(), depth + 1);
-        }
-
-        if(root.getRightNode() != null){
-            printNode(root.getRightNode(), depth + 1);
-        }
-    }
 }
